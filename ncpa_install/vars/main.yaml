@@ -1,0 +1,3 @@
+---
+
+__ncpa_config: "{{ ncpa_config_default | combine(ncpa_config, recursive=True) }}"

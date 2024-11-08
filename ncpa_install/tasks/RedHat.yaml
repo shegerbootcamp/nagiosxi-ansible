@@ -1,0 +1,14 @@
+---
+- name: Check if Nagios repository is already installed
+  command: rpm -q nagios-repo-8-2.el8.noarch
+  register: nagios_repo_installed
+  ignore_errors: true
+
+- name: Add Nagios repository manually if not installed
+  command: rpm -Uvh https://repo.nagios.com/nagios/8/nagios-repo-8-2.el8.noarch.rpm
+  become: true
+  when: nagios_repo_installed.rc != 0
+
+- name: Install ncpa package
+  command: dnf install ncpa -y
+  become: true

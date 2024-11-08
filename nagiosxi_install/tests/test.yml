@@ -1,5 +1,9 @@
 ---
-- hosts: localhost
-  remote_user: root
+- name: Install and configure nagiosxi
+  hosts: remote
+  become: true
+  gather_facts: no
+  
   roles:
-    - nagiosxi_install
+   # - { role: ../install_python }
+     - { role: ../nagiosxi_install }

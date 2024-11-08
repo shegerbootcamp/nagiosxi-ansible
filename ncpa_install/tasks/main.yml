@@ -1,56 +1,24 @@
 ---
-# tasks file for ncpa_install
 
-- name: Install Nagios repository
-  yum:
-    name: https://repo.nagios.com/nagios/8/nagios-repo-8-2.el8.noarch.rpm
-    state: present
+- name: set OS dependent variables
+  ansible.builtin.include_vars: '{{ item }}'
+  with_first_found:
+    - '{{ ansible_facts.os_family }}.yaml'
 
-- name: Update system
-  yum:
-    name: '*'
-    state: latest
+- name: set OS dependent tasks
+  ansible.builtin.include_tasks: '{{ item }}'
+  with_first_found:
+    - '{{ ansible_facts.os_family }}.yaml'
 
-- name: Install NCPA package
-  yum:
-    name: ncpa
-    state: present
+- name: configure ncpa
+  ansible.builtin.template:
+    src: ncpa.cfg
+    dest: "{{ ncpa_config_path }}/ncpa.cfg"
+  notify: restart ncpa
+  tags: ncpa_config
 
-- name: Ensure NCPA service is started
-  systemd:
-    name: ncpa
-    state: started
-    enabled: yes
-
-- name: Allow incoming traffic to NCPA on TCP port 5693
-  firewalld:
-    service: ncpa
-    permanent: yes
-    state: enabled
-    immediate: yes
-    port: 5693/tcp
-
-- name: Ensure firewalld is running
-  systemd:
-    name: firewalld
-    state: started
-    enabled: yes
-
-- name: Set the community string in ncpa.cfg
-  lineinfile:
-    path: /usr/local/ncpa/etc/ncpa.cfg
-    regexp: '^community_string ='
-    line: 'community_string = {{ ncpa_community_string }}'
-    backup: yes
-
-- name: Restart ncpa_listener service to apply changes
-  systemd:
-    name: ncpa_listener
-    state: restarted
-    enabled: yes
-
-- name: Open firewall port for NCPA (temporary)
-  command: firewall-cmd --zone=public --add-port=5693/tcp
-
-- name: Open firewall port for NCPA (permanent)
-  command: firewall-cmd --zone=public --add-port=5693/tcp --permanent
+- name: modify log path perms
+  ansible.builtin.file:
+    path: "{{ ncpa_log_path }}"
+    state: directory
+    mode: '0770'

@@ -1,2 +1,15 @@
 ---
-# handlers file for ncpa_install
+
+- name: restarting ncpa
+  ansible.builtin.systemd:
+    daemon_reload: true
+    name: ncpa.service
+    state: restarted
+    enabled: true
+  listen: restart ncpa
+
+- name: check if ncpa is running
+  ansible.builtin.uri:
+    url: https://localhost:{{ __ncpa_config.listener.port }}/api?token={{ __ncpa_config.api.community_string }}
+    validate_certs: false
+  listen: restart ncpa

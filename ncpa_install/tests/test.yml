@@ -1,5 +1,6 @@
 ---
-- hosts: localhost
-  remote_user: root
+- name: Install and configure ncpa
+  hosts: remote
+  become: true
   roles:
-    - ncpa_install
+    - { role: ../ansible-ncpa }
