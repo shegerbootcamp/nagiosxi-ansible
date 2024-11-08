@@ -1,0 +1,32 @@
+---
+- name: Download Nagios XI
+  get_url:
+    url: "https://assets.nagios.com/downloads/nagiosxi/2024/xi-2024R1.2.1.tar.gz"
+    dest: /tmp/xi-2024R1.2.1.tar.gz
+
+- name: Extract Nagios XI
+  ansible.builtin.unarchive:
+    src: /tmp/xi-2024R1.2.1.tar.gz
+    dest: /tmp
+    remote_src: yes
+
+- name: Run Nagios XI installer
+  shell: |
+    yes | ./fullinstall > /tmp/nagiosxi_install.log 2>&1
+  args:
+    chdir: /tmp/nagiosxi
+  register: nagios_install
+  notify: Restart Nagios XI services
+
+- name: Show Nagios XI installation log
+  debug:
+    msg: "{{ nagios_install.stdout }}"
+
+- name: Show the Nagios XI installation log file
+  command: cat /tmp/nagiosxi_install.log
+  register: install_log
+  changed_when: false
+
+- name: Display the log content
+  debug:
+    var: install_log.stdout  

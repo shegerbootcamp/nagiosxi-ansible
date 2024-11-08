@@ -1,0 +1,6 @@
+---
+# handlers file for nagiosxi_install
+- name: Restart Nagios XI services
+  service:
+    name: nagiosxi
+    state: restarted

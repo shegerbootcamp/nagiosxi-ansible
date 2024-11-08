@@ -1,0 +1,9 @@
+---
+# install_python3_11.yml
+
+- name: Ensure curl and wget are installed
+  dnf:
+    name:
+      - curl
+      - wget
+    state: present

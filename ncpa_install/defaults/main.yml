@@ -1,0 +1,5 @@
+---
+# Default variables for ncpa_install role
+ncpa_repo_url: "https://repo.nagios.com/nagios/8/nagios-repo-8-2.el8.noarch.rpm"
+ncpa_port: 5693
+ncpa_community_string: "Str0ngT0k3n"

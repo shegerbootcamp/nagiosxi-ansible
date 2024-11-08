@@ -1,0 +1,9 @@
+---
+- name: Install and configure nagiosxi
+  hosts: remote
+  become: true
+  gather_facts: no
+  
+  roles:
+   # - { role: ../install_python }
+     - { role: ../nagiosxi_install }

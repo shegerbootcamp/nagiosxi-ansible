@@ -1,0 +1,16 @@
+galaxy_info:
+  author: Jemal M
+  description: Role to install and configure Nagios XI for remote server monitoring on Red Hat 8.9
+  company: cloud engineering team # optional; add company name if desired
+  license: GPL-2.0-or-later # or specify another license like MIT, Apache-2.0, etc.
+  min_ansible_version: "2.9"
+
+  # Add tags for searchability on Ansible Galaxy
+  galaxy_tags:
+    - monitoring
+    - nagios
+    - server-management
+    - redhat
+    - automation
+
+dependencies: []
