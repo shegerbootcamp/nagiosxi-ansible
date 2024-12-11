@@ -1,7 +1,7 @@
 ---
 # tasks file for nagiosxi_install
-- name: Register and subscribe Red Hat
-  include_tasks: register_redhat.yml
+#- name: Register and subscribe Red Hat
+ # include_tasks: register_redhat.yml
 
 #- name: Install prerequisites
  # include_tasks: prerequisites.yml

@@ -36,3 +36,13 @@ Author Information
 ------------------
 
 An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+
+
+### Set up , nagiosxi server
+
+```
+yum update -y
+yum install python3
+pip3 install ansible
+```
+

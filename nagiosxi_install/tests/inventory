@@ -1,2 +1,2 @@
 [remote]
-54.164.28.183 ansible_user="ec2-user"
+52.54.223.207 ansible_user="ec2-user"
